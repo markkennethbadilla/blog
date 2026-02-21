@@ -45,5 +45,26 @@ export default async function Page({ params }: { params: Params }) {
     )
     .slice(0, 3)
 
-  return <ArticlePage article={article} related={related} />
+  // JSON-LD Article structured data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    datePublished: article.date,
+    url: `https://blog.elunari.uk/${slug}`,
+    author: { "@type": "Person", name: "Mark Kenneth Badilla", url: "https://marks-portfolio.elunari.uk" },
+    publisher: { "@type": "Organization", name: "Elunari", url: "https://elunari.uk" },
+    keywords: article.tags.join(", "),
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ArticlePage article={article} related={related} />
+    </>
+  )
 }
