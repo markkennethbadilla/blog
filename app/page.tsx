@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import type { Metadata } from "next"
+import ThemeToggle from "@/components/ThemeToggle"
 
 export const metadata: Metadata = {
   title: "Elunari Blog | Developer Articles & Guides",
@@ -58,6 +59,7 @@ export default function HomePage() {
             >
               Portfolio
             </a>
+            <ThemeToggle />
           </nav>
         </div>
       </header>

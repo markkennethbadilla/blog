@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import type { Article } from "@/lib/articles"
+import ThemeToggle from "@/components/ThemeToggle"
 
 interface ArticlePageProps {
   article: Article
@@ -73,6 +74,7 @@ export default function ArticlePage({ article, related }: ArticlePageProps) {
               <Wrench className="w-3.5 h-3.5" />
               DevKit
             </a>
+            <ThemeToggle />
           </nav>
         </div>
       </header>
