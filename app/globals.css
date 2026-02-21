@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0a0a0f;
+  --color-foreground: #e8e8ed;
+  --color-card: #111118;
+  --color-card-hover: #16161f;
+  --color-border: #1e1e2a;
+  --color-border-hover: #2a2a3a;
+  --color-muted: #6b6b80;
+  --color-accent: #6366f1;
+  --color-accent-light: #818cf8;
+  --color-accent-subtle: rgba(99, 102, 241, 0.08);
+  --color-cyan: #22d3ee;
+  --color-orange: #f97316;
+  --font-sans: "Inter", "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Reading progress bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-cyan));
+  z-index: 100;
+  transition: width 50ms linear;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/* Animated gradient mesh background */
+.gradient-mesh {
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(34, 211, 238, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(249, 115, 22, 0.04) 0%, transparent 50%);
+}
+
+/* Glowing text */
+.glow-text {
+  background: linear-gradient(135deg, var(--color-accent-light), var(--color-cyan), var(--color-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover glow */
+.card-glow {
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-border);
+}
+.card-glow:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 0 40px rgba(99, 102, 241, 0.06), 0 8px 32px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Fade in animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+.animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+/* Tag pill */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--color-accent-subtle);
+  color: var(--color-accent-light);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+/* Article content styles */
+.article-content h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-foreground);
+  scroll-margin-top: 5rem;
+}
+.article-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-foreground);
+}
+.article-content p {
+  line-height: 1.75;
+  color: rgba(232, 232, 237, 0.82);
+  margin-bottom: 1rem;
+}
+.article-content ul, .article-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+.article-content ul { list-style-type: disc; }
+.article-content ol { list-style-type: decimal; }
+.article-content li {
+  color: rgba(232, 232, 237, 0.82);
+  margin-bottom: 0.375rem;
+}
+.article-content a {
+  color: var(--color-accent-light);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.article-content a:hover {
+  border-bottom-color: var(--color-accent-light);
+}
+.article-content code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--color-accent-light);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+}
+.article-content pre {
+  background: #0d0d14;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+.article-content pre code {
+  background: transparent;
+  color: rgba(232, 232, 237, 0.9);
+  padding: 0;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.article-content strong {
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+/* Selection */
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+}
