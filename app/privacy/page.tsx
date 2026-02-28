@@ -13,7 +13,7 @@ export default function PrivacyPage() {
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
             href="/"
-            className="text-xl font-bold bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent"
+            className="text-xl font-bold text-accent"
           >
             Elunari Blog
           </Link>
@@ -52,7 +52,7 @@ export default function PrivacyPage() {
               may opt out of personalized advertising at{" "}
               <a
                 href="https://www.google.com/settings/ads"
-                className="text-purple-400 hover:underline"
+                className="text-emerald-500 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -99,7 +99,7 @@ export default function PrivacyPage() {
             site owner at:{" "}
             <a
               href="mailto:iammkb2002@gmail.com"
-              className="text-purple-400 hover:underline"
+              className="text-emerald-500 hover:underline"
             >
               iammkb2002@gmail.com
             </a>

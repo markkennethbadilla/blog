@@ -9,7 +9,7 @@ import {
   Coffee,
   Wrench,
   ArrowRight,
-  Sparkles,
+  Layers,
 } from "lucide-react"
 import type { Article } from "@/lib/articles"
 import ThemeToggle from "@/components/ThemeToggle"
@@ -43,7 +43,7 @@ export default function ArticlePage({ article, related }: ArticlePageProps) {
       />
 
       {/* Header */}
-      <header className="border-b border-border/50 backdrop-blur-sm sticky top-0 z-50 bg-background/80">
+      <header className="border-b border-border/50 sticky top-0 z-50 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -60,7 +60,7 @@ export default function ArticlePage({ article, related }: ArticlePageProps) {
               href="/"
               className="flex items-center gap-1.5 text-sm"
             >
-              <Sparkles className="w-3.5 h-3.5 text-accent-light" />
+              <Layers className="w-3.5 h-3.5 text-accent-light" />
               <span className="font-semibold">Elunari</span>
             </Link>
           </div>

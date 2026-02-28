@@ -6,7 +6,7 @@ import {
   ArrowRight,
   Coffee,
   Wrench,
-  Sparkles,
+  Layers,
 } from "lucide-react"
 import type { Metadata } from "next"
 import ThemeToggle from "@/components/ThemeToggle"
@@ -31,11 +31,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen gradient-mesh">
       {/* Header */}
-      <header className="border-b border-border/50 backdrop-blur-sm sticky top-0 z-50 bg-background/80">
+      <header className="border-b border-border/50 sticky top-0 z-50 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-accent-light" />
+              <Layers className="w-4 h-4 text-accent-light" />
             </div>
             <span className="text-lg font-bold tracking-tight">
               Elunari <span className="text-muted">Blog</span>
@@ -68,7 +68,7 @@ export default function HomePage() {
         {/* Hero */}
         <div className="text-center mb-20 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-subtle border border-accent/20 text-accent-light text-sm mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
+            <Layers className="w-3.5 h-3.5" />
             Developer Knowledge Hub
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
