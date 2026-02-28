@@ -222,6 +222,9 @@ const articleContent: Record<string, React.FC> = {
   "typescript-patterns-2026": TypescriptPatterns,
   "docker-essentials-developers": DockerEssentials,
   "react-performance-optimization": ReactPerformance,
+  "web-security-essentials": WebSecurityEssentials,
+  "css-architecture-scalable-apps": CssArchitecture,
+  "python-automation-2026": PythonAutomation,
 }
 
 /* =====================  ARTICLE 1  ===================== */
@@ -839,6 +842,573 @@ function Dashboard() {
       <p>
         Focus on architecture (where state lives, how data flows) rather
         than micro-optimizations. A well-structured app is fast by default.
+      </p>
+    </>
+  )
+}
+
+/* =====================  ARTICLE 9: Web Security  ===================== */
+function WebSecurityEssentials() {
+  return (
+    <>
+      <p>
+        Security isn&apos;t optional — it&apos;s a fundamental requirement for
+        every web application. Whether you&apos;re building a side project or
+        enterprise software, understanding these security principles will
+        protect your users and your reputation.
+      </p>
+
+      <h2>The OWASP Top 10 in 2026</h2>
+      <p>
+        The Open Web Application Security Project (OWASP) maintains the
+        definitive list of critical web application security risks. Here are
+        the ones every developer encounters:
+      </p>
+
+      <h3>1. Broken Access Control</h3>
+      <p>
+        The #1 vulnerability. Users accessing resources they shouldn&apos;t —
+        viewing other users&apos; data, modifying records without permission,
+        or escalating privileges.
+      </p>
+      <pre><code>{`// BAD: Trusting client-side role checks
+if (user.role === "admin") showAdminPanel()
+
+// GOOD: Server-side enforcement on every request
+app.get("/admin/users", requireRole("admin"), (req, res) => {
+  // Only reaches here if server verified the role
+})`}</code></pre>
+
+      <h3>2. Injection Attacks</h3>
+      <p>
+        SQL injection, NoSQL injection, command injection — any time user
+        input is concatenated into queries or commands without sanitization.
+      </p>
+      <pre><code>{`// VULNERABLE: String concatenation
+const query = "SELECT * FROM users WHERE id = " + userId
+
+// SAFE: Parameterized queries
+const query = "SELECT * FROM users WHERE id = $1"
+const result = await db.query(query, [userId])`}</code></pre>
+
+      <h2>Cross-Site Scripting (XSS)</h2>
+      <p>
+        XSS allows attackers to inject malicious scripts into pages viewed
+        by other users. Three types exist: stored, reflected, and DOM-based.
+      </p>
+      <h3>Prevention</h3>
+      <ul>
+        <li>Always escape output — React does this by default with JSX</li>
+        <li>Never use <code>dangerouslySetInnerHTML</code> with user input</li>
+        <li>Sanitize HTML with libraries like DOMPurify when rich text is needed</li>
+        <li>Set <code>Content-Security-Policy</code> headers to block inline scripts</li>
+      </ul>
+      <pre><code>{`// Content-Security-Policy header
+Content-Security-Policy: default-src 'self';
+  script-src 'self' 'nonce-abc123';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;`}</code></pre>
+
+      <h2>Cross-Site Request Forgery (CSRF)</h2>
+      <p>
+        CSRF tricks authenticated users into performing unintended actions.
+        The attacker crafts a request that uses the victim&apos;s existing
+        session cookies.
+      </p>
+      <h3>Prevention</h3>
+      <ul>
+        <li>Use CSRF tokens on all state-changing forms</li>
+        <li>Set <code>SameSite=Strict</code> or <code>SameSite=Lax</code> on cookies</li>
+        <li>Verify the <code>Origin</code> header on server-side</li>
+        <li>Use POST for mutations, never GET</li>
+      </ul>
+
+      <h2>CORS: Cross-Origin Resource Sharing</h2>
+      <p>
+        CORS controls which domains can access your API. Misconfigured CORS
+        is one of the most common security mistakes.
+      </p>
+      <pre><code>{`// DANGEROUS: Allow all origins
+Access-Control-Allow-Origin: *
+
+// SAFE: Whitelist specific origins
+const allowedOrigins = ["https://myapp.com", "https://staging.myapp.com"]
+if (allowedOrigins.includes(req.headers.origin)) {
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin)
+}`}</code></pre>
+
+      <h2>Authentication Best Practices</h2>
+      <ol>
+        <li><strong>Hash passwords with bcrypt/argon2</strong> — never store plaintext or MD5/SHA1</li>
+        <li><strong>Implement rate limiting</strong> — prevent brute force attacks</li>
+        <li><strong>Use JWTs carefully</strong> — short expiry, httpOnly cookies, rotate refresh tokens</li>
+        <li><strong>Enable MFA</strong> — TOTP or WebAuthn for sensitive accounts</li>
+        <li><strong>Session management</strong> — invalidate on logout, timeout after inactivity</li>
+      </ol>
+      <pre><code>{`// Secure cookie configuration
+res.cookie("session", token, {
+  httpOnly: true,    // No JS access
+  secure: true,      // HTTPS only
+  sameSite: "strict", // No cross-site sending
+  maxAge: 3600000,   // 1 hour
+  path: "/",
+})`}</code></pre>
+
+      <h2>HTTPS Everywhere</h2>
+      <p>
+        HTTPS is non-negotiable. Use it for everything — APIs, static sites,
+        development. Services like Let&apos;s Encrypt make certificates free.
+        Always set the <code>Strict-Transport-Security</code> header.
+      </p>
+
+      <h2>Security Headers Checklist</h2>
+      <pre><code>{`Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Security-Policy: default-src 'self'
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()`}</code></pre>
+
+      <h2>Dependency Security</h2>
+      <p>
+        Most vulnerabilities come from dependencies. Run <code>npm audit</code>{" "}
+        regularly, use Dependabot or Snyk, and keep packages updated. A
+        single compromised package can expose your entire application.
+      </p>
+
+      <h2>Wrapping Up</h2>
+      <p>
+        Security is a continuous process. Start with the basics — input
+        validation, parameterized queries, proper authentication — and layer
+        on headers, monitoring, and regular audits. Your users are trusting
+        you with their data. Don&apos;t let them down.
+      </p>
+    </>
+  )
+}
+
+/* =====================  ARTICLE 10: CSS Architecture  ===================== */
+function CssArchitecture() {
+  return (
+    <>
+      <p>
+        CSS at scale is hard. What starts as a few stylesheets quickly
+        becomes an unmaintainable mess of specificity battles, !important
+        overrides, and fear-driven &quot;don&apos;t touch that class&quot;
+        comments. Here&apos;s how to build CSS that scales.
+      </p>
+
+      <h2>The Problem with Unstructured CSS</h2>
+      <p>
+        Without architecture, CSS accumulates. Dead code piles up because
+        nobody knows what&apos;s safe to remove. Specificity wars escalate.
+        New developers add new classes instead of reusing existing ones.
+        The bundle grows forever.
+      </p>
+
+      <h2>Methodology 1: BEM (Block Element Modifier)</h2>
+      <p>
+        BEM provides naming conventions that make CSS self-documenting and
+        reduce specificity conflicts.
+      </p>
+      <pre><code>{`/* Block */
+.card { ... }
+
+/* Element (belongs to block) */
+.card__title { ... }
+.card__body { ... }
+.card__footer { ... }
+
+/* Modifier (variant of block/element) */
+.card--featured { ... }
+.card__title--large { ... }`}</code></pre>
+      <p>
+        BEM works well for component libraries and design systems. The flat
+        specificity (single class selectors) eliminates most cascade issues.
+      </p>
+
+      <h2>Methodology 2: Utility-First (Tailwind CSS)</h2>
+      <p>
+        Tailwind flips the model: instead of writing custom CSS, you compose
+        utility classes directly in HTML. This eliminates dead CSS entirely —
+        unused utilities are purged at build time.
+      </p>
+      <pre><code>{`<!-- Traditional CSS -->
+<div class="card card--featured">
+  <h2 class="card__title">Hello</h2>
+</div>
+
+<!-- Tailwind -->
+<div class="rounded-xl border border-indigo-500 bg-white p-6 shadow-lg">
+  <h2 class="text-xl font-bold text-gray-900">Hello</h2>
+</div>`}</code></pre>
+      <p>
+        The tradeoff: HTML gets verbose, but CSS never grows. For most
+        modern projects, this is the right tradeoff.
+      </p>
+
+      <h2>CSS Modules</h2>
+      <p>
+        CSS Modules scope styles to individual components automatically.
+        Class names are transformed to unique hashes at build time,
+        eliminating global namespace pollution.
+      </p>
+      <pre><code>{`/* Button.module.css */
+.primary {
+  background: #6366f1;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+// Button.tsx
+import styles from "./Button.module.css"
+export default function Button() {
+  return <button className={styles.primary}>Click</button>
+  // Renders: <button class="Button_primary_x7k2">Click</button>
+}`}</code></pre>
+
+      <h2>Design Tokens</h2>
+      <p>
+        Design tokens are the single source of truth for colors, spacing,
+        typography, and other design decisions. They bridge the gap between
+        design and code.
+      </p>
+      <pre><code>{`/* CSS Custom Properties as tokens */
+:root {
+  --color-primary: #6366f1;
+  --color-surface: #0a0a0f;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --radius-md: 0.75rem;
+  --font-heading: "Inter", sans-serif;
+}
+
+/* Usage */
+.card {
+  background: var(--color-surface);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+}`}</code></pre>
+
+      <h2>Responsive Design Systems</h2>
+      <p>
+        Stop writing one-off media queries. Build a responsive system with
+        consistent breakpoints, fluid typography, and container queries.
+      </p>
+      <pre><code>{`/* Fluid typography — no media queries needed */
+h1 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Container queries — respond to parent, not viewport */
+@container (min-width: 400px) {
+  .card { display: grid; grid-template-columns: 1fr 2fr; }
+}`}</code></pre>
+
+      <h2>CSS Layers</h2>
+      <p>
+        CSS <code>@layer</code> lets you control the cascade explicitly.
+        Define layer order once, then write styles without worrying about
+        source order or specificity.
+      </p>
+      <pre><code>{`@layer reset, base, components, utilities;
+
+@layer reset { *, *::before, *::after { box-sizing: border-box; margin: 0; } }
+@layer base { body { font-family: var(--font-heading); } }
+@layer components { .card { padding: 1rem; } }
+@layer utilities { .hidden { display: none; } }`}</code></pre>
+
+      <h2>Architecture Checklist</h2>
+      <ol>
+        <li>Choose one methodology and stick with it</li>
+        <li>Use design tokens for all magic values</li>
+        <li>Scope styles to components (modules, Tailwind, or strict BEM)</li>
+        <li>Build a responsive system, not ad-hoc breakpoints</li>
+        <li>Purge unused CSS in production builds</li>
+        <li>Document patterns in a living style guide</li>
+        <li>Use CSS layers to manage cascade order</li>
+      </ol>
+
+      <h2>Wrapping Up</h2>
+      <p>
+        The best CSS architecture is the one your team will actually follow.
+        Pick a methodology, enforce it with linting, and invest in design
+        tokens early. Future you will be grateful.
+      </p>
+    </>
+  )
+}
+
+/* =====================  ARTICLE 11: Python Automation  ===================== */
+function PythonAutomation() {
+  return (
+    <>
+      <p>
+        Python is the ultimate automation language. Its batteries-included
+        standard library and massive ecosystem make it perfect for scripts
+        that save hours of manual work every week. Here are 10 practical
+        automation scripts you can start using today.
+      </p>
+
+      <h2>1. Bulk File Renamer</h2>
+      <p>
+        Rename hundreds of files with consistent naming conventions using
+        pattern matching.
+      </p>
+      <pre><code>{`import os
+import re
+from pathlib import Path
+
+def bulk_rename(directory, pattern, replacement):
+    """Rename files matching a regex pattern."""
+    path = Path(directory)
+    renamed = 0
+    for file in path.iterdir():
+        if file.is_file():
+            new_name = re.sub(pattern, replacement, file.name)
+            if new_name != file.name:
+                file.rename(path / new_name)
+                renamed += 1
+    print(f"Renamed {renamed} files")
+
+# Example: Remove date prefixes
+bulk_rename("./downloads", r"^\\d{4}-\\d{2}-\\d{2}_", "")`}</code></pre>
+
+      <h2>2. Web Scraper with Rate Limiting</h2>
+      <p>
+        Extract data from websites responsibly with built-in delays and
+        error handling.
+      </p>
+      <pre><code>{`import requests
+from bs4 import BeautifulSoup
+import time
+import csv
+
+def scrape_pages(urls, delay=2):
+    """Scrape pages with polite rate limiting."""
+    results = []
+    for url in urls:
+        try:
+            resp = requests.get(url, timeout=10,
+                headers={"User-Agent": "DataBot/1.0"})
+            soup = BeautifulSoup(resp.text, "html.parser")
+            title = soup.find("h1").text.strip()
+            results.append({"url": url, "title": title})
+        except Exception as e:
+            results.append({"url": url, "error": str(e)})
+        time.sleep(delay)
+    return results`}</code></pre>
+
+      <h2>3. API Health Monitor</h2>
+      <p>
+        Check multiple API endpoints and get notified when something goes
+        down. Run on a cron schedule for continuous monitoring.
+      </p>
+      <pre><code>{`import requests
+import json
+from datetime import datetime
+
+ENDPOINTS = [
+    {"name": "API", "url": "https://api.example.com/health"},
+    {"name": "Auth", "url": "https://auth.example.com/status"},
+    {"name": "CDN", "url": "https://cdn.example.com/ping"},
+]
+
+def check_health():
+    results = []
+    for ep in ENDPOINTS:
+        try:
+            r = requests.get(ep["url"], timeout=5)
+            status = "UP" if r.status_code == 200 else "DOWN"
+        except:
+            status = "DOWN"
+        results.append({**ep, "status": status,
+            "checked": datetime.now().isoformat()})
+    return results`}</code></pre>
+
+      <h2>4. CSV Data Cleaner</h2>
+      <p>
+        Normalize messy spreadsheet data: trim whitespace, fix encodings,
+        standardize date formats, and remove duplicates.
+      </p>
+      <pre><code>{`import pandas as pd
+
+def clean_csv(input_file, output_file):
+    df = pd.read_csv(input_file)
+
+    # Trim whitespace from string columns
+    str_cols = df.select_dtypes(include="object").columns
+    df[str_cols] = df[str_cols].apply(lambda x: x.str.strip())
+
+    # Remove duplicates
+    before = len(df)
+    df = df.drop_duplicates()
+    print(f"Removed {before - len(df)} duplicates")
+
+    # Standardize dates
+    for col in df.columns:
+        if "date" in col.lower():
+            df[col] = pd.to_datetime(df[col], errors="coerce")
+
+    df.to_csv(output_file, index=False)
+    print(f"Cleaned data saved to {output_file}")`}</code></pre>
+
+      <h2>5. Automated Email Reports</h2>
+      <p>
+        Generate and send HTML email reports with Python&apos;s built-in
+        <code>smtplib</code> and <code>email</code> modules.
+      </p>
+      <pre><code>{`import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_report(subject, html_body, recipients):
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"] = "reports@company.com"
+    msg["To"] = ", ".join(recipients)
+    msg.attach(MIMEText(html_body, "html"))
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login("user", "app_password")
+        server.send_message(msg)`}</code></pre>
+
+      <h2>6. Directory Size Analyzer</h2>
+      <p>
+        Find what&apos;s eating your disk space. Recursively scan directories
+        and report the largest folders and files.
+      </p>
+      <pre><code>{`from pathlib import Path
+
+def analyze_directory(path, top_n=10):
+    """Find the largest files in a directory tree."""
+    path = Path(path)
+    files = []
+    for f in path.rglob("*"):
+        if f.is_file():
+            files.append((f, f.stat().st_size))
+
+    files.sort(key=lambda x: x[1], reverse=True)
+    print(f"Top {top_n} largest files:")
+    for f, size in files[:top_n]:
+        mb = size / (1024 * 1024)
+        print(f"  {mb:.1f} MB  {f.relative_to(path)}")`}</code></pre>
+
+      <h2>7. JSON API Client Generator</h2>
+      <p>
+        Auto-generate typed Python clients from API responses. Saves hours
+        of manual wrapper code.
+      </p>
+      <pre><code>{`import requests
+import json
+
+def generate_client(base_url, endpoints):
+    """Generate API client methods from endpoint definitions."""
+    class APIClient:
+        def __init__(self, api_key):
+            self.session = requests.Session()
+            self.session.headers["Authorization"] = f"Bearer {api_key}"
+            self.base = base_url
+
+        def get(self, path, **params):
+            return self.session.get(
+                f"{self.base}{path}", params=params
+            ).json()
+
+        def post(self, path, data):
+            return self.session.post(
+                f"{self.base}{path}", json=data
+            ).json()
+
+    return APIClient`}</code></pre>
+
+      <h2>8. Log File Parser</h2>
+      <p>
+        Extract patterns from log files — error counts, response times,
+        request frequencies — and export to CSV for analysis.
+      </p>
+      <pre><code>{`import re
+from collections import Counter
+
+def parse_logs(log_file):
+    errors = Counter()
+    with open(log_file) as f:
+        for line in f:
+            match = re.search(r"ERROR.*?:\\s*(.+)", line)
+            if match:
+                errors[match.group(1)] += 1
+
+    print("Top errors:")
+    for msg, count in errors.most_common(10):
+        print(f"  {count:>5}x  {msg[:80]}")`}</code></pre>
+
+      <h2>9. Screenshot Automation</h2>
+      <p>
+        Capture screenshots of web pages at multiple resolutions — perfect
+        for visual regression testing or portfolio documentation.
+      </p>
+      <pre><code>{`from playwright.sync_api import sync_playwright
+
+def capture_screenshots(urls, sizes=None):
+    sizes = sizes or [
+        (1920, 1080, "desktop"),
+        (768, 1024, "tablet"),
+        (375, 812, "mobile"),
+    ]
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        for url in urls:
+            for w, h, label in sizes:
+                page = browser.new_page(viewport={"width": w, "height": h})
+                page.goto(url)
+                page.wait_for_load_state("networkidle")
+                slug = url.split("//")[1].replace("/", "_")
+                page.screenshot(path=f"{slug}_{label}.png")
+                page.close()
+        browser.close()`}</code></pre>
+
+      <h2>10. Environment Setup Script</h2>
+      <p>
+        Bootstrap new development environments with one command — install
+        dependencies, create config files, and seed databases.
+      </p>
+      <pre><code>{`import subprocess
+import shutil
+from pathlib import Path
+
+def setup_project(project_name):
+    root = Path(project_name)
+    root.mkdir(exist_ok=True)
+
+    # Create directory structure
+    for d in ["src", "tests", "docs", "scripts"]:
+        (root / d).mkdir(exist_ok=True)
+
+    # Create virtual environment
+    subprocess.run(["python", "-m", "venv", str(root / ".venv")])
+
+    # Create config files
+    (root / ".env").write_text("DEBUG=true\\nDATABASE_URL=sqlite:///db.sqlite3\\n")
+    (root / ".gitignore").write_text(".venv/\\n.env\\n__pycache__/\\n*.pyc\\n")
+
+    print(f"Project {project_name} initialized!")`}</code></pre>
+
+      <h2>Getting Started</h2>
+      <p>
+        Pick the script that solves your biggest time sink. Start with one,
+        customize it, then build your personal automation toolkit. The time
+        invested in automation compounds — a script that saves 10 minutes
+        daily saves 40+ hours per year.
+      </p>
+
+      <h2>Wrapping Up</h2>
+      <p>
+        Python&apos;s strength is readability and rapid prototyping. These
+        scripts are starting points — extend them, combine them, and build
+        an automation layer that lets you focus on creative work instead of
+        repetitive tasks.
       </p>
     </>
   )

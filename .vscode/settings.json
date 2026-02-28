@@ -6,10 +6,10 @@
   // ╚══════════════════════════════════════════════════════════════════╝
 
   // ── Agent Architecture ──
-  // AGENTS.md in root + nested dirs = full behavioral control
-  "chat.useAgentsMdFile": true,
-  "chat.useNestedAgentsMdFiles": true,
-  "github.copilot.chat.codeGeneration.useInstructionFiles": false,
+  // .github/copilot-instructions.md = full behavioral control (migrated from AGENTS.md)
+  "chat.useAgentsMdFile": false,
+  "chat.useNestedAgentsMdFiles": false,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
 
   // ── Copilot Agent — NO LIMITS ──
   // Agent mode: unlimited requests, auto-approve everything

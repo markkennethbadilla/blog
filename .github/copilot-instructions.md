@@ -1,3 +1,4 @@
+<!-- PARENT-INSTRUCTIONS-START -->
 # Rules
 
 <mandatory>
@@ -161,9 +162,9 @@ All clickable elements: `cursor-pointer`. Hover/focus states required.
 
 ## File Safety & Self-Editing
 
-Never edit AGENTS.md via PowerShell (BOM corruption). Only `replace_string_in_file`.
+Never edit copilot-instructions.md via PowerShell (BOM corruption). Only `replace_string_in_file`.
 **Size cap: 200 lines MAX.** Overflow to E:\copilot-memory\reference.md.
-After editing: Run `E:\config-sync.ps1` to propagate. Section order and details: `reference.md` -> "AGENTS.md Governance".
+After editing: Run `E:\config-sync.ps1` to propagate. Section order and details: `reference.md` -> "Copilot Instructions Governance".
 
 <mandatory>
 ## HQ Logging (CEO Duty)
@@ -198,3 +199,5 @@ Full specs: E:\copilot-memory\reference.md -> "External Tool Specs".
 - SLEEP: Run `[Console]::ReadKey($true)` (isBackground=false, no timeout). Never yield without it.
 NEVER end your turn without a tool call.
 </mandatory>
+<!-- PARENT-INSTRUCTIONS-END -->
+

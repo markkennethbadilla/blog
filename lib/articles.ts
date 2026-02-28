@@ -82,6 +82,33 @@ export const articles: Article[] = [
     readTime: "14 min read",
     tags: ["React", "Performance", "Frontend"],
   },
+  {
+    slug: "web-security-essentials",
+    title: "Web Security Essentials Every Developer Must Know in 2026",
+    description:
+      "A practical guide to securing web applications: XSS prevention, CSRF protection, Content Security Policy, CORS, authentication best practices, and the OWASP Top 10.",
+    date: "March 1, 2026",
+    readTime: "12 min read",
+    tags: ["Security", "Web Development", "Best Practices"],
+  },
+  {
+    slug: "css-architecture-scalable-apps",
+    title: "CSS Architecture for Scalable Applications",
+    description:
+      "How to structure CSS that scales: methodologies like BEM, utility-first with Tailwind, CSS Modules, design tokens, and building maintainable design systems.",
+    date: "March 1, 2026",
+    readTime: "10 min read",
+    tags: ["CSS", "Architecture", "Frontend"],
+  },
+  {
+    slug: "python-automation-2026",
+    title: "10 Python Automation Scripts That Save Hours Every Week",
+    description:
+      "Practical Python scripts for file management, web scraping, API integration, data processing, and workflow automation that every developer should have.",
+    date: "March 1, 2026",
+    readTime: "11 min read",
+    tags: ["Python", "Automation", "Productivity"],
+  },
 ]
 
 export function getArticle(slug: string): Article | undefined {
