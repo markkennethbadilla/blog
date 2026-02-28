@@ -20,7 +20,7 @@
 - DevKit affiliate links: tools.elunari.uk (inline in articles + CTA sections)
 - IndexNow key: e7f3a9b2d4c6e8f0a1b3c5d7e9f1a3b5
 
-## Articles (8)
+## Articles (11)
 1. essential-developer-tools-2026
 2. api-integration-patterns
 3. nextjs-portfolio-guide
@@ -29,6 +29,9 @@
 6. typescript-patterns-2026
 7. docker-essentials-developers
 8. react-performance-optimization
+9. web-security-essentials
+10. css-architecture-scalable-apps
+11. python-automation-2026
 
 ## Design
 - Color palette: deep navy (#0a0a0f), indigo accent (#6366f1), cyan (#22d3ee), orange (#f97316)
